@@ -4,7 +4,7 @@ import os
 from os.path import dirname
 
 module_path = dirname(__file__)
-#os.chdir(module_path)
+os.chdir(module_path)
 
 expected = [
     "A,12",
@@ -14,8 +14,8 @@ expected = [
     "E,13",
 ]
 
-#if os.path.isdir("output"):
-    #os.system("rm -rf output")
+if os.path.isdir("output"):
+    os.system("rm -rf output")
 
 os.system("docker run -v $PWD:/workspace jdvelasq/hive:classroom")
 
