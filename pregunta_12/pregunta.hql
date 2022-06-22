@@ -32,4 +32,34 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 /*
     >>> Escriba su respuesta a partir de este punto <<<
 */
+DROP TABLE IF EXISTS resultados1;
+CREATE TABLE resultados1 (letra STRING, clave MAP<STRING, INT>);
 
+INSERT OVERWRITE TABLE resultados1
+SELECT
+        m.clave1,
+        c3
+FROM
+        t0
+LATERAL VIEW
+        explode(c2) m AS clave1;
+
+DROP TABLE IF EXISTS resultados;
+CREATE TABLE resultados (letra1 STRING, clave1 STRING, cuenta INT);
+
+INSERT OVERWRITE TABLE resultados
+SELECT
+        letra,
+        resultados1.key,
+        count(*)
+FROM
+        resultados1
+LATERAL VIEW
+        explode(clave) resultados1 AS key, value
+GROUP BY
+        letra,
+        resultados1.key;
+
+INSERT OVERWRITE DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM resultados;
