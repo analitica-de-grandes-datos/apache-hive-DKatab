@@ -4,7 +4,7 @@ import os
 from os.path import dirname
 
 module_path = dirname(__file__)
-#os.chdir(module_path)
+os.chdir(module_path)
 
 expected = [
     "A,1990-10-06,10",
