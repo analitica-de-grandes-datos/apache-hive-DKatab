@@ -46,4 +46,4 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 */
 create table tbl2 as select substr(c4,0,4) as year, c5 as c5 from tbl0;
 Select year, letra from tbl2 lateral view explode(c5) tab_letras as letra;
-INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' select year, letra, count(1) AS cantidad from tbl3 group by year, letra order by year, letra;
+INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' select year, letra, count(1) AS cantidad from tbl2 group by year, letra order by year, letra;
