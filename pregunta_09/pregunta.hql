@@ -47,4 +47,4 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 */
 INSERT OVERWRITE DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT c2, concat_ws(':', collect_set(cast(c1 as string))) FROM (SELECT c2, c1 FROM tbl0 ORDER BY c1) tabla GROUP BY c2;
+SELECT tbl0.c1, tbl0.c2 , tbl1.c4[tbl0.c2] FROM tbl0 JOIN tbl1 on tbl0.c1 = tbl1.c1 ORDER BY tbl0.c1;
