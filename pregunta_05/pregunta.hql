@@ -44,6 +44,6 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 /*
     >>> Escriba su respuesta a partir de este punto <<<
 */
-create table tbl2 as select substr(c4,0,4) as year, c5 as c5 from tbl0;
-Select year, letra from tbl2 lateral view explode(c5) tab_letras as letra;
-SELECT  YEAR(c4) as fecha , lista , count(*) FROM tbl0  lateral view EXPLODE(c5) table as lista GROUP BY YEAR(c4), lista ;
+INSERT OVERWRITE DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT  YEAR(c4) as fecha , list , count(*) FROM tbl0  lateral view EXPLODE(c5) table as lista GROUP BY YEAR(c4)  , list ;
